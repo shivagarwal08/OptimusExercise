@@ -10,7 +10,8 @@
   <div *ngIf="!isCurrent">
     <h5>Please provide Postal Code or Country details</h5> 
      <form #locationForm="ngForm" role="form" novalidate>
-        <input type="text" name="country" [(ngModel)]="country">
+        Country:<input type="text" name="country" [(ngModel)]="country"> <br/>
+        Postal Code:<input type="text" name="postalCode" [(ngModel)]="postalCode">
         <input type="button" (click)="getDetails()" value="Submit">
      </form>
   </div>

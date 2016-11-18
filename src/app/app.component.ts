@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'Optimus Weather Application';
   isCurrent: boolean = false;
   country: string;
+  postalCode: string;
   weatherData: any;
   coords: any;
   constructor(private weatherService: WeatherService) {
@@ -25,7 +26,7 @@ export class AppComponent {
     console.log('getDetails');
     this.weatherData = undefined;
     if (this.isCurrent) {
-      console.log('for current location');      
+      console.log('for current location');
       navigator.geolocation.getCurrentPosition(position => {
         this.coords = position.coords;
         this.weatherService.getWeatherForCurrentLocation(this.coords.latitude, this.coords.longitude)
@@ -37,14 +38,27 @@ export class AppComponent {
       });
 
     } else {
-      console.log('for:', this.country);
-      this.weatherService.getWeatherForCountry(this.country)
-        .subscribe(
-        (res) => {
-          console.log('data', res);
-          this.weatherData = res;
-        }
-        );
+
+      if (this.country) {
+        console.log('for:', this.country);
+        this.weatherService.getWeatherForCountry(this.country)
+          .subscribe(
+          (res) => {
+            console.log('data', res);
+            this.weatherData = res;
+          }
+          );
+      } else if (this.postalCode) {
+        console.log('for:', this.postalCode);
+        this.weatherService.getWeatherForPostalCode(this.postalCode)
+          .subscribe(
+          (res) => {
+            console.log('data', res);
+            this.weatherData = res;
+          }
+          );
+      }
+
 
 
     }
