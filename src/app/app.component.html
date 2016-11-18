@@ -2,8 +2,8 @@
   {{title}}
 </h1>
 <h3> Do you want to share your location</h3>
-<input type="button"  name="current" value="Yes" (click)="isCurrent = true">
-<input type="button"  name="custom" value="No" (click)="isCurrent = false">
+<input type="button"  name="current" value="Yes" (click)="isCurrent = true; getDetails()">
+<input type="button"  name="custom" value="No" (click)="isCurrent = false; weatherData=undefined">
 
 <div>
   
@@ -17,18 +17,19 @@
   
   <div *ngIf="weatherData">
     <h4>Weather Details</h4>
-    Latitude: {{weatherData.coord.lat}}
-    Longitude: {{weatherData.coord.lon}}   
-    Main: {{weatherData.weather.main}} - {{weatherData.weather.description}}
-   Temp: {{weatherData.main.temp}}
-   Pressure: {{weatherData.main.pressure}}
-   Humidity: {{weatherData.main.humidity}}
-   Max Temp: {{weatherData.main.temp_max}}
-   Min Temp: {{weatherData.main.temp_min}}
+    Name: {{weatherData.name}} <br/>
+    Latitude: {{weatherData.coord?.lat}} <br/>
+    Longitude: {{weatherData.coord?.lon}}   <br/>
+    Main: {{weatherData.weather[0]?.main}} - {{weatherData.weather[0]?.description}}<br/>
+   Temp: {{weatherData.main?.temp}}<br/>
+   Pressure: {{weatherData.main?.pressure}}<br/>
+   Humidity: {{weatherData.main?.humidity}}<br/>
+   Max Temp: {{weatherData.main?.temp_max}}<br/>
+   Min Temp: {{weatherData.main?.temp_min}}<br/>
 
-   Visibility: {{weatherData.visibility}}
-   Wind Speed: {{weatherData.wind.speed}}
-   Wind Direction: {{weatherData.wind.deg}}
+   Visibility: {{weatherData.visibility}}<br/>
+   Wind Speed: {{weatherData.wind?.speed}}<br/>
+   Wind Direction: {{weatherData.wind?.deg}}
   </div>
 </div>
 

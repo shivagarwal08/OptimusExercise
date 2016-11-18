@@ -18,22 +18,28 @@ import 'rxjs/add/operator/share';
 @Injectable()
 export class WeatherService {
     constructor(private http: Http) { }
-   createCommonHeaders() {
-       let headers = new Headers();
+    createCommonHeaders() {
+        let headers = new Headers();
         headers.append('Accept', 'application/json');
-      //  headers.append('Content-Type', 'application/json');
+        //  headers.append('Content-Type', 'application/json');
         // headers.set('Authorization', sessionStorage.getItem('Authorization'));
         return headers;
     }
 
-    getWeatherForCity(city) {
-        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=31f45e343de0c1aba0a4266f106e7b23`;
+    getWeatherForCountry(country) {
+        let url = `http://api.openweathermap.org/data/2.5/weather?q=${country}&APPID=31f45e343de0c1aba0a4266f106e7b23`;
         let options = new RequestOptions({ headers: this.createCommonHeaders() });
         return this.http.get(url, options)
-        .map((res: Response) => {
-           // console.log('response from webservice');
-           // console.log(res.json());            
-            return res.json();
-        });
+            .map((res: Response) => {
+                return res.json();
+            });
+    }
+    getWeatherForCurrentLocation(lat: number, lon: number) {
+        let url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=31f45e343de0c1aba0a4266f106e7b23`;
+        let options = new RequestOptions({ headers: this.createCommonHeaders() });
+        return this.http.get(url, options)
+            .map((res: Response) => {
+                return res.json();
+            });
     }
 }

@@ -8,44 +8,44 @@ import { WeatherService } from './app.weather.service';
   providers: [WeatherService]
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Optimus Weather Application';
   isCurrent: boolean = false;
   country: string;
   weatherData: any;
-
+  coords: any;
   constructor(private weatherService: WeatherService) {
     console.log('constructor');
     if (navigator.geolocation) {
       console.log('Geolocation is supported by browser');
-      this.currentPosition();
     } else {
-
+      console.log('Geolocation is not supported by browser');
     }
-  }
-  currentPosition() {
-    navigator.geolocation.getCurrentPosition(position => {
-      console.log('position:', position);
-    });
-
-
-    // console.log('Latitude: ' + position.coords.latitude, 'Longitude: ' + position.coords.longitude); 
   }
   getDetails() {
     console.log('getDetails');
+    this.weatherData = undefined;
     if (this.isCurrent) {
-
+      console.log('for current location');      
+      navigator.geolocation.getCurrentPosition(position => {
+        this.coords = position.coords;
+        this.weatherService.getWeatherForCurrentLocation(this.coords.latitude, this.coords.longitude)
+          .subscribe(
+          (res) => {
+            console.log('data', res);
+            this.weatherData = res;
+          });
+      });
 
     } else {
-      console.log(this.country);
-      console.log(this.weatherService);
-      this.weatherService.getWeatherForCity(this.country)
-      .subscribe(
+      console.log('for:', this.country);
+      this.weatherService.getWeatherForCountry(this.country)
+        .subscribe(
         (res) => {
-          console.log('data', res);   
-          this.weatherData = res;       
+          console.log('data', res);
+          this.weatherData = res;
         }
-      );     
-      
+        );
+
 
     }
   }
