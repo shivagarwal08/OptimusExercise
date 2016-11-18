@@ -1,6 +1,34 @@
 <h1>
   {{title}}
 </h1>
-<h3> Select One</h3>
-<input type="radio" [(ngModel)]="model.sex"  name="sex" value="male">Male<br>
-<input type="radio" [(ngModel)]="model.sex"  name="sex" value="female">Female
+<h3> Do you want to share your location</h3>
+<input type="button"  name="current" value="Yes" (click)="isCurrent = true">
+<input type="button"  name="custom" value="No" (click)="isCurrent = false">
+
+<div>
+  
+  <div *ngIf="!isCurrent">
+    <h5>Please provide Postal Code or Country details</h5> 
+     <form #locationForm="ngForm" role="form" novalidate>
+        <input type="text" name="country" [(ngModel)]="country">
+        <input type="button" (click)="getDetails()" value="Submit">
+     </form>
+  </div>
+  
+  <div *ngIf="weatherData">
+    <h4>Weather Details</h4>
+    Latitude: {{weatherData.coord.lat}}
+    Longitude: {{weatherData.coord.lon}}   
+    Main: {{weatherData.weather.main}} - {{weatherData.weather.description}}
+   Temp: {{weatherData.main.temp}}
+   Pressure: {{weatherData.main.pressure}}
+   Humidity: {{weatherData.main.humidity}}
+   Max Temp: {{weatherData.main.temp_max}}
+   Min Temp: {{weatherData.main.temp_min}}
+
+   Visibility: {{weatherData.visibility}}
+   Wind Speed: {{weatherData.wind.speed}}
+   Wind Direction: {{weatherData.wind.deg}}
+  </div>
+</div>
+
